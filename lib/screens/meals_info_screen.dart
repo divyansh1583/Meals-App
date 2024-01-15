@@ -32,14 +32,28 @@ class MealsInfo extends StatelessWidget {
                   ),
             ),
             const SizedBox(height: 5),
-            for (String item in meal.ingredients)
-              Text(
-                item,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                textAlign: TextAlign.center,
-              ),
+            //using for loop instead of list view
+            // for (String item in meal.ingredients)
+            //   Text(
+            //     item,
+            //     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            //           color: Theme.of(context).colorScheme.onBackground,
+            //         ),
+            //     textAlign: TextAlign.center,
+            //   ),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: meal.ingredients.length,
+              itemBuilder: (context, index) {
+                return Text(
+                  meal.ingredients[index],
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                  textAlign: TextAlign.center,
+                );
+              },
+            ),
             const SizedBox(height: 20),
             //Steps
             Text(

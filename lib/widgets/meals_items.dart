@@ -60,22 +60,24 @@ class MealItems extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        //duration
                         MealsDetails(
                           icon: const Icon(Icons.timer_outlined),
                           text: meal.duration.toString(),
                         ),
                         const SizedBox(width: 20),
+                        //complexity
                         MealsDetails(
-                          icon: const Icon(Icons.work_outlined),
+                          icon: const Icon(Icons.animation),
                           text: fCapital(meal.complexity.name),
                         ),
                         const SizedBox(width: 10),
+                        //Affordibilty
                         MealsDetails(
                           icon: const Icon(
                             Icons.attach_money,
                           ),
                           text: fCapital(meal.affordability.name),
-                          wid: 0,
                         ),
                       ],
                     )

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/screens/category_screen.dart';
+import 'package:meals_app/screens/filter_screen.dart';
 import 'main_drawer_items.dart';
 
 class MainDrawer extends StatefulWidget {
@@ -52,12 +54,23 @@ class _MainDrawerState extends State<MainDrawer> {
           DrawerItems(
             title: "Home",
             icon: Icons.dining_outlined,
-            func: () {},
+            func: () {
+              // Navigator.of(context).pop();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const CategoryScreen(),
+                ),
+              );
+            },
           ),
           DrawerItems(
             title: "Filter",
             icon: Icons.filter_alt_outlined,
-            func: () {},
+            func: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const FilterScreen(),
+              ));
+            },
           ),
           //
         ],

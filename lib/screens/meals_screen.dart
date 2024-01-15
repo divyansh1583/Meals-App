@@ -16,22 +16,38 @@ class MealsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    
-    List<Widget> filteredMeals = mealsList.map((meal) {
+    //changes List<Meal> into List<Widget> with
+    //And store in meals
+    List<Widget> categoryMeals = mealsList.map((meal) {
       return MealItems(meal: meal);
     }).toList();
+
     return Scaffold(
       appBar: AppBar(title: Text(title)),
+      // drawer: const MainDrawer(),
       body: mealsList.isEmpty
-          ? const Center(
-              child: Text(
-                'No meal available!',
-                style: TextStyle(color: Colors.white),
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Uh.. So Sorry!',
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 45),
+                  ),
+                  Text(
+                    'No meals available',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(color: Theme.of(context).colorScheme.primary),
+                  ),
+                ],
               ),
             )
           : ListView(
-              children: filteredMeals,
+              children: categoryMeals,
             ),
     );
   }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/data/meal_list.dart';
 import 'package:meals_app/screens/meals_screen.dart';
 import '../models/category_model.dart';
+import '../screens/filter_screen.dart';
+
 
 class CategoryItems extends StatelessWidget {
   const CategoryItems({super.key, required this.category});
   final Category category;
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -16,8 +16,8 @@ class CategoryItems extends StatelessWidget {
           MaterialPageRoute(builder: (context) {
             return MealsScreen(
               title: category.title,
-              mealsList: mealsList.where((meal) {
-                return meal.categories.contains(category.id);
+              mealsList: filteredList.where((list) {
+                return list.categories.contains(category.id);
               }).toList(),
               isFavScreen: false,
             );

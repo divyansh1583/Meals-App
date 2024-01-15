@@ -5,10 +5,8 @@ class MealsDetails extends StatelessWidget {
     super.key,
     required this.icon,
     required this.text,
-    this.wid = 5,
   });
 
-  final double wid;
   final Icon icon;
   final String text;
 
@@ -17,7 +15,6 @@ class MealsDetails extends StatelessWidget {
     return Row(
       children: [
         icon,
-        SizedBox(width: wid),
         Text(
           text,
           style: const TextStyle(

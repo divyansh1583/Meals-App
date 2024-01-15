@@ -12,6 +12,8 @@ class DrawerItems extends StatelessWidget {
   final void Function() func;
   @override
   Widget build(BuildContext context) {
+    //benifit: i can style very drawer item in 
+    //cmd otherwise i had to do it again and again(only possible because same style)
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       leading: Icon(
