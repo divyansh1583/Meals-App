@@ -46,7 +46,7 @@ class MealItems extends StatelessWidget {
               right: 0,
               left: 0,
               child: Container(
-                color: Colors.black45,
+                color: Colors.black87,
                 padding: const EdgeInsets.symmetric(vertical: 7),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/data/meal_list.dart';
 import 'package:meals_app/screens/category_screen.dart';
 import 'package:meals_app/screens/meals_screen.dart';
-
-import '../models/meal_model.dart';
+import 'package:meals_app/widgets/favouraite_button.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -14,16 +12,18 @@ class TabScreen extends StatefulWidget {
 
 class _TabScreenState extends State<TabScreen> {
   int currentindex = 0;
-
   @override
   Widget build(BuildContext context) {
-    List<Meal> temp = mealsList.where((meal) {
-      return meal.isFavouraite;
-    }).toList();
     return Scaffold(
       body: <Widget>[
+        //index 0
         const CategoryScreen(),
-        MealsScreen(title: 'Favouraite', mealsList: temp, isFavScreen: true)
+        //index 1
+        MealsScreen(
+          title: 'Favouraite',
+          mealsList: favList, //sending favList
+          isFavScreen: true,
+        )
       ][currentindex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentindex,

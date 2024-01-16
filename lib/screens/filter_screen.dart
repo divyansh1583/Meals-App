@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/data/meal_list.dart';
 import 'package:meals_app/models/meal_model.dart';
-import '../data/meal_list.dart';
+import 'package:meals_app/screens/category_screen.dart';
+import 'package:meals_app/widgets/filter_tile.dart';
 
-bool isGlutenChanged = false;
-bool isLactoseChanged = false;
-bool isVeganChanged = false;
-bool isVegetarianChanged = false;
-List<Meal> filteredList = filteredList = mealsList;
+// bool isGlutenChanged = false;
+// bool isLactoseChanged = false;
+// bool isVeganChanged = false;
+// bool isVegetarianChanged = false;
+
+var kInitialValues = {
+  FilterType.glutenFree: false,
+  FilterType.lactoseFree: false,
+  FilterType.vegan: false,
+  FilterType.vegetarian: false,
+};
+var selectedValues = kInitialValues;
+
+List<Meal> filteredList = mealsList;
 
 class FilterScreen extends StatefulWidget {
   const FilterScreen({
@@ -18,143 +29,60 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
-  void filter(FilterType filterType) {
-    if (filterType == FilterType.glutenFree) {
-      filteredList = filteredList.where((meals) => meals.isGlutenFree).toList();
-    } else if (filterType == FilterType.lactoseFree) {
-      filteredList =
-          filteredList.where((meals) => meals.isLactoseFree).toList();
-    } else if (filterType == FilterType.vegan) {
-      filteredList = filteredList.where((meals) => meals.isVegan).toList();
-    } else if (filterType == FilterType.vegetarian) {
-      filteredList = filteredList.where((meals) => meals.isVegetarian).toList();
-    }
-  }
-
-  void unfilter(FilterType filterType) {
-    setState(() {
-      if (filterType == FilterType.glutenFree) {
-        filteredList = mealsList.where((meal) => !meal.isGlutenFree).toList();
-      } else if (filterType == FilterType.lactoseFree) {
-        filteredList = mealsList.where((meal) => !meal.isLactoseFree).toList();
-      } else if (filterType == FilterType.vegan) {
-        filteredList = mealsList.where((meal) => !meal.isVegan).toList();
-      } else if (filterType == FilterType.vegetarian) {
-        filteredList = mealsList.where((meal) => !meal.isVegetarian).toList();
-      }
-    });
-  }
-
+  bool isFilterOff = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Filter"),
       ),
-      body: ListView(
-        children: [
-          //gluten
-          ListTile(
-            contentPadding: const EdgeInsets.all(10),
-            leading: const SizedBox(width: 5),
-            title: Text(
-              "Gluten free",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: Theme.of(context).colorScheme.primary),
+      body: WillPopScope(
+        onWillPop: () async {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const CategoryScreen(),
             ),
-            trailing: Switch(
-              value: isGlutenChanged,
-              onChanged: (value) {
-                setState(() {
-                  isGlutenChanged = value;
-                });
-                if (isGlutenChanged) {
-                  filter(FilterType.glutenFree);
-                } else {
-                  unfilter(FilterType.glutenFree);
-                }
-              },
+          );
+          return false;
+        },
+        child: ListView(
+          children: const [
+           
+            const FilterTile(
+              filterType: FilterType.glutenFree,
+              title: "Gluten Free",
             ),
-          ),
-          //lactose
-          ListTile(
-            contentPadding: const EdgeInsets.all(10),
-            leading: const SizedBox(width: 5),
-            title: Text(
-              "Lactose free",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: Theme.of(context).colorScheme.primary),
+            const FilterTile(
+              filterType: FilterType.lactoseFree,
+              title: "Lactose Free",
             ),
-            trailing: Switch(
-              value: isLactoseChanged,
-              onChanged: (value) {
-                setState(() {
-                  isLactoseChanged = value;
-                });
-                if (isLactoseChanged) {
-                  filter(FilterType.lactoseFree);
-                } else {
-                  unfilter(FilterType.lactoseFree);
-                }
-              },
+            const FilterTile(
+              filterType: FilterType.vegan,
+              title: "Vegan",
             ),
-          ),
-          //vegan
-          ListTile(
-            contentPadding: const EdgeInsets.all(10),
-            leading: const SizedBox(width: 5),
-            title: Text(
-              "Vegan",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: Theme.of(context).colorScheme.primary),
+            const FilterTile(
+              filterType: FilterType.vegetarian,
+              title: "Vegetarian",
             ),
-            trailing: Switch(
-              value: isVeganChanged,
-              onChanged: (value) {
-                setState(() {
-                  isVeganChanged = value;
-                });
-                if (isVeganChanged) {
-                  filter(FilterType.vegan);
-                } else {
-                  unfilter(FilterType.vegan);
-                }
-              },
-            ),
-          ),
-          // vegetarian
-          ListTile(
-            contentPadding: const EdgeInsets.all(10),
-            leading: const SizedBox(width: 5),
-            title: Text(
-              "Vegetarian",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: Theme.of(context).colorScheme.primary),
-            ),
-            trailing: Switch(
-              value: isVegetarianChanged,
-              onChanged: (value) {
-                setState(() {
-                  isVegetarianChanged = value;
-                });
-                if (isVegetarianChanged) {
-                  filter(FilterType.vegetarian);
-                } else {
-                  unfilter(FilterType.vegetarian);
-                }
-              },
-            ),
-          ),
-          const SizedBox(height: 5),
-        ],
+            // TextButton(
+            //   onPressed: () {
+            //     setState(() {
+            //       filteredList = filteredList;
+            //     });
+            //   },
+            //   child: const Text('Refresh'),
+            // ),
+            // ListView(
+            //   shrinkWrap: true,
+            //   children: filteredList.map((meals) {
+            //     return Text(
+            //       meals.title,
+            //       style: const TextStyle(color: Colors.white),
+            //     );
+            //   }).toList(),
+            // ),
+          ],
+        ),
       ),
     );
   }
