@@ -1,48 +1,30 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/meal_model.dart';
+import '../provider/favourite_provider.dart';
 
-class FavButton extends StatefulWidget {
+class FavButton extends ConsumerWidget {
   const FavButton({super.key, required this.meal, this.size = 30});
   final double size;
   final Meal meal;
-  @override
-  State<FavButton> createState() => _FavButtonState();
-}
-
-List<Meal> favList = [];
-
-class _FavButtonState extends State<FavButton> {
-  void _changeFav() {
-    setState(() {
-      var isExisting = favList.contains(widget.meal);
-      if (isExisting) {
-        favList.remove(widget.meal);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("${widget.meal.title} Removed from favourites"),
-          ),
-        );
-      } else {
-        favList.add(widget.meal);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("${widget.meal.title} added in favourites"),
-          ),
-        );
-      }
-      // isFav = !isFav;
-    });
-  }
-
   // bool isFav = false;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    bool isFav = ref.watch(favouriteProvider).contains(meal);
     return IconButton(
-      iconSize: widget.size,
-      onPressed: _changeFav,
-      // icon: isFav ? const Icon(Icons.star) : const Icon(Icons.star_border),
-      icon: const Icon(Icons.star),
+      iconSize: size,
+      onPressed: () {
+        var result = ref.read(favouriteProvider.notifier).toggleFavStatus(meal);
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          result
+              ? const SnackBar(content: Text("Meal Added"))
+              : const SnackBar(content: Text('Meal Removed')),
+        );
+      },
+      icon: isFav ? const Icon(Icons.star) : const Icon(Icons.star_border),
+      // icon: const Icon(Icons.star),
     );
   }
 }

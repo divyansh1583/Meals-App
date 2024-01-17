@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals_app/provider/favourite_provider.dart';
 import 'package:meals_app/screens/category_screen.dart';
 import 'package:meals_app/screens/meals_screen.dart';
-import 'package:meals_app/widgets/favouraite_button.dart';
 
-class TabScreen extends StatefulWidget {
+class TabScreen extends ConsumerStatefulWidget {
   const TabScreen({super.key});
 
   @override
-  State<TabScreen> createState() => _TabScreenState();
+  ConsumerState<TabScreen> createState() => _TabScreenState();
 }
 
-class _TabScreenState extends State<TabScreen> {
+class _TabScreenState extends ConsumerState<TabScreen> {
   int currentindex = 0;
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class _TabScreenState extends State<TabScreen> {
         //index 1
         MealsScreen(
           title: 'Favouraite',
-          mealsList: favList, //sending favList
+          mealsList: ref.watch(favouriteProvider), //sending favList
           isFavScreen: true,
         )
       ][currentindex],

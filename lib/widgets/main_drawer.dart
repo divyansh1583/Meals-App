@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/screens/category_screen.dart';
 import 'package:meals_app/screens/filter_screen.dart';
 import 'main_drawer_items.dart';
 
@@ -55,24 +54,19 @@ class _MainDrawerState extends State<MainDrawer> {
             title: "Home",
             icon: Icons.dining_outlined,
             func: () {
-              // Navigator.of(context).pop();
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const CategoryScreen(),
-                ),
-              );
+              Navigator.of(context).pop();
             },
           ),
           DrawerItems(
             title: "Filter",
             icon: Icons.filter_alt_outlined,
             func: () {
+              Navigator.of(context).pop();
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => const FilterScreen(),
               ));
             },
           ),
-          
         ],
       ),
     );

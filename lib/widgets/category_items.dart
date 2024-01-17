@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/screens/filter_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals_app/screens/meals_screen.dart';
 import '../models/category_model.dart';
+import '../provider/filtered_list_provider.dart';
 
-class CategoryItems extends StatelessWidget {
+class CategoryItems extends ConsumerWidget {
   const CategoryItems({super.key, required this.category});
   final Category category;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -15,7 +16,7 @@ class CategoryItems extends StatelessWidget {
           MaterialPageRoute(builder: (context) {
             return MealsScreen(
               title: category.title,
-              mealsList: filteredList.where((list) {
+              mealsList: ref.watch(filteredListProvider).where((list) {
                 return list.categories.contains(category.id);
               }).toList(),
               isFavScreen: false,
@@ -59,7 +60,8 @@ class CategoryItems extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Text(
-                filteredList
+                ref
+                    .watch(filteredListProvider)
                     .where((list) {
                       return list.categories.contains(category.id);
                     })
