@@ -23,7 +23,19 @@ class FavButton extends ConsumerWidget {
               : const SnackBar(content: Text('Meal Removed')),
         );
       },
-      icon: isFav ? const Icon(Icons.star) : const Icon(Icons.star_border),
+      icon: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        child: Icon(
+          isFav ? Icons.star : Icons.star_border,
+          key: ValueKey(isFav),
+        ),
+        transitionBuilder: (child, animation) {
+          return RotationTransition(
+            turns: Tween<double>(begin: 0.5, end: 1.0).animate(animation),
+            child: child,
+          );
+        },
+      ),
       // icon: const Icon(Icons.star),
     );
   }
